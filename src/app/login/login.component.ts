@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute  } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthenticationService, MessageService } from '../_service/index';
+import { AuthenticationService, MessageService } from '../_services/index';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +23,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.logout();
  
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
-  login(data): void {
+  login(): void {
     this.loading = true;
     this.authenticationService.login(this.model.username, this.model.password)
         .subscribe(

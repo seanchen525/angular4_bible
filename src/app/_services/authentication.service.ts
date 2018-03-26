@@ -17,7 +17,7 @@ export class AuthenticationService {
                 if (user && user.token){
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
-                this.user = user;
+                this.user.next(user);
                 return user;
             });
     }

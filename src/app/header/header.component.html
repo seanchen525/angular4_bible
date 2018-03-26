@@ -1,7 +1,11 @@
 <div>
   <img src="{{logoUri}}" alt="logo" class="logo" />
-  <div *ngIf="userstatus">
+  <div *ngIf="!user; else loggedIn">
     <a routerLink="/login">Login</a>
     <a routerLink="/signup">Sign Up</a>
   </div>
+  <ng-template #loggedIn>
+    <p>{{user.username}}</p>
+    <a (click)="logout()">Log Out</a>
+  </ng-template>
 </div>

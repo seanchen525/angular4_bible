@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -9,11 +11,12 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MessageService } from './_services/message.service';
 import { IndexComponent } from './index/index.component';
 import { MessageComponent } from './message/message.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { AuthenticationService } from './_services/authentication.service';
+import { AuthenticationService, MessageService, UserService } from './_services/index';
+import { JwtInterceptor, fakeBackendProvider } from './_helpers/index';
+import { SignupComponent } from './signup/signup.component';
 
 
 @NgModule({
@@ -24,16 +27,26 @@ import { AuthenticationService } from './_services/authentication.service';
     LoginComponent,
     HomeComponent,
     IndexComponent,
-    MessageComponent
+    MessageComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
     MessageService,
     AuthGuard,
-    AuthenticationService
+    UserService,
+    AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
