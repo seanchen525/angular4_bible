@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute  } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthenticationService, MessageService } from '../_service/index';
 
 @Component({
   selector: 'app-login',
@@ -13,21 +14,29 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute ,
+    private authenticationService: AuthenticationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
-    
+    this.authenticationService.logout();
+ 
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   login(data): void {
-    console.log(data.uname + "---" + data.passwd);
-    if (data.uname == "admin" && data.passwd == "12345"){
-      alert("Login Success!");
-      this.router.navigate(["home"]);
-    } else {
-      alert("Invalid login");
-    }
+    this.loading = true;
+    this.authenticationService.login(this.model.username, this.model.password)
+        .subscribe(
+            data => {
+                this.router.navigate([this.returnUrl]);
+            },
+            error => {
+                this.messageService.error(error);
+                this.loading = false;
+            });
   }
 
 }
