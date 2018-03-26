@@ -1,5 +1,5 @@
-<div>
-  <img src="{{logoUri}}" alt="logo" class="logo" />
+<nav class="navbar navbar-dark bg-dark sticky-top">
+  <img src="{{logoUri}}" alt="logo" class="logo navbar-brand" />
   <div *ngIf="!user; else loggedIn">
     <a routerLink="/login">Login</a>
     <a routerLink="/signup">Sign Up</a>
@@ -8,4 +8,4 @@
     <p>{{user.username}}</p>
     <a (click)="logout()">Log Out</a>
   </ng-template>
-</div>
+</nav>
