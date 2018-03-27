@@ -1,11 +1,49 @@
-<nav class="navbar navbar-dark bg-dark sticky-top">
-  <img src="{{logoUri}}" alt="logo" class="logo navbar-brand" />
-  <div *ngIf="!user; else loggedIn">
-    <a routerLink="/login">Login</a>
-    <a routerLink="/signup">Sign Up</a>
-  </div>
-  <ng-template #loggedIn>
-    <p>{{user.username}}</p>
-    <a (click)="logout()">Log Out</a>
-  </ng-template>
-</nav>
+<div class="header-container row sticky-top">
+  <div class="col"></div>
+  <nav class="navbar col-9">
+    <div class="col-1">
+      <img src="{{logoUri}}" alt="logo" class="logo navbar-brand" />
+    </div>
+    <div class="col-3">
+      <form class="form-inline header-search-form">
+        <input class="form-control mr-sm-2" type="search" aria-label="Search" placeholder="Search" />
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="col">
+      <div *ngIf="!user; else loggedIn" class="row">
+        <div class="col-9"> </div>
+        <div class="col-3">
+          <a routerLink="/login" class="btn btn-success">Login</a>
+          <a routerLink="/signup" class="btn btn-primary">Sign Up</a>
+        </div>
+      </div>
+      <ng-template #loggedIn>
+        <div class="row align-items-center">
+          <div class="col-9">
+            <ul class="nav">
+              <li class="nav-item navs-text">
+                <a routerLink="/home" class="btn btn-success nav-link">Home</a>
+              </li>
+              <li class="nav-item navs-text">
+                <a class="nav-link">Profile</a>
+              </li>
+              <li class="nav-item navs-text">
+                <a class="nav-link">Bible</a>
+              </li>
+              <li class="nav-item navs-text">
+                <a class="nav-link">Config</a>
+              </li>  
+            </ul>
+          </div>
+          
+          <div class="col-3">
+            <span>{{user.username}}</span>
+            <button (click)="logout()" class="btn btn-danger">Log Out</button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </nav>
+  <div class="col"></div>
+</div>
